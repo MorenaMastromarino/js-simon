@@ -1,24 +1,39 @@
-// testo iniziale
 const randomNumbers = [];
-document.getElementById('text').innerHTML='Hai 30 secondi per memorizzare i seguenti numeri:';
-document.querySelector('.box').innerHTML = `<span>${generateNumbers(5)}</span>`;
+const text = document.getElementById('text');
+const box = document.querySelector('.box');
 
-setTimeout(fineTimeout, 3000);   //cambiarlo in 30000
+// testo iniziale
+text.innerHTML='Hai 30 secondi per memorizzare i seguenti numeri:';
+box.innerHTML = `<span>${generateNumbers(5)}</span>`;
+
+// timer
+setTimeout(fineTimeout, 30000);  
 
 
-// funzione che gestisce eventi dopo 30 sec
+// funzione che gestisce eventi dopo timer
 function fineTimeout(){
-  document.querySelector('.box').innerHTML = '';
+  box.innerHTML = '';
   const numeriUtente = [];
 
   for(let i = 0; i < 5; i++ ){
     const numeroUtente = parseInt(prompt('Indovina i numeri'));
     numeriUtente.push(numeroUtente);
-  }
+  };
 
-  console.log(randomNumbers);
-  console.log(numeriUtente);
-}
+  console.log('numeri da indovinare', randomNumbers);
+  console.log('numeri inseriti', numeriUtente);
+
+  const numeriIndovinati = numeriUtente.filter( numero => randomNumbers.includes(numero));
+
+  console.log('numeri indovinati', numeriIndovinati);
+
+  if(numeriIndovinati.length === 0){
+    text.innerHTML=`Non hai indovinato nessun numero`;
+  }else{
+    text.innerHTML=`Hai indovinato ${numeriIndovinati.length} numeri e sono:`;
+    box.innerHTML = `<span>${numeriIndovinati.join(', ')}</span>`;
+  };
+};
 
 // funzione che genera una stringa di cinque numeri diversi tra loro
 function generateNumbers(n) { 
